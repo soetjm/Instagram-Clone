@@ -1,0 +1,8 @@
+to start first arrange your own pgdatabase connection setting that is found in util
+and email sender in controller singup.js
+
+-in the file upload section it is recommend to upload upto 40-50mb vidoe file and one file
+at time or you can disabeld it after accepting one file
+
+-the project is not responsive so it is only for pc
+-all the svg file are take from instapage..

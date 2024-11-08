@@ -1,0 +1,22 @@
+<%- include('../partials/header.ejs') %>
+<body>
+    <div class="container">
+        <h1 class="logo">Instagram</h1>
+        <p>Sign up to see photos and videos from your friends.</p>
+        <button class="facebook-login"><i class="fab fa-facebook"></i>Log in with Facebook</button>
+        <p>OR</p>
+        <form  id="signupForm" action="/signup" method="post">
+            <input type="text" name="email" placeholder="Mobile Number or Email" required>
+            <input type="text" name="fullname" placeholder="Full Name" required>
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <% if(locals.result) {%>
+              <div class="alert alert-danger" role="alert"><%= result %></div>  
+            <% } %>
+            <p class="info-text">People who use our service may have uploaded your contact information to Instagram. <a href="https://www.facebook.com/help/instagram/261704639352628" target="_blank">Learn More</a></p>
+            <p class="terms">By signing up, you agree to our <a href="https://help.instagram.com/581066165581870/?locale=en_US" target="_blank">Terms</a>, <a href="https://www.facebook.com/privacy/policy" target="_blank">Privacy Policy</a> and <a href="#">Cookies Policy</a>.</p>
+            <input type="submit" id="signup" class="signup-button" value="Sign up">
+        </form>
+        <p class="login">Have an account? <a href="/login">Log in</a></p>
+        <p class="get-app">Get the app.</p>
+<%- include('../partials/footer.ejs') %>

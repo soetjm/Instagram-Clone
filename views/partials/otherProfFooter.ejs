@@ -1,0 +1,101 @@
+<script>
+  //sending email bind requst to soket.io
+  const socket = io();
+
+    const emailSent = {
+        useremail:document.getElementById("emailForEmitt").innerHTML
+    }
+    socket.emit('emailSoketIdChat',emailSent);
+
+    //buttons for post save and tage bars;
+    
+    const post = document.getElementById("postesBtn");
+    const save = document.getElementById("savedBtn");
+    const taggedBtn = document.getElementById("taggedBtn");
+  
+
+    const postTab =document.getElementById("postes");
+    const taggedTab = document.getElementById("tagged");
+
+    post.addEventListener("click",()=>{
+      if(postTab.style.display == 'none'){
+        postTab.style.display='block';
+        taggedTab.style.display='none';
+      }
+    })
+    taggedBtn.addEventListener("click",()=>{
+        if(taggedTab.style.display == 'none'){
+            postTab.style.display='none';
+            taggedTab.style.display='block';
+        }
+    })
+
+    const videos = document.querySelectorAll('video');
+    videos.forEach((video)=>{
+      video.addEventListener(('click'),()=>{
+        if(video.paused){
+          video.play();
+        }else if(video.play()){
+          video.pause();
+        };
+      })
+    })
+
+    //message button
+
+   //function message(event){
+   // const userEmail = event.target.getAttribute("userId");
+   // const messageToSend=  event.target.getAttribute("followId");
+
+    //console.log(userEmail,'bale message email');
+    //console.log(messageToSend,'message yemilaklet');
+    //event.target.innerHTML="loading...";
+    //event.target.disabled=true;
+    //const fromData = new FormData();
+    //fromData.append('userEmail',userEmail);
+    //fromData.append('messageToSend',messageToSend);
+    //fetch('/postmessage', {
+    //    method: 'POST',
+    //    body: fromData,
+    //})
+    //.then()
+    //.catch(error => {
+    //    console.error('Error:', error);
+    //});
+
+   //}
+
+  //follow button
+  function follow(event){
+    event.target.innerHTML = 'following';
+    //event.target.style.color = 'white';
+    event.target.style.background = 'rgb(54,54,54)';
+    event.target.disabled = true;
+    let userEmail = event.target.getAttribute('userId');
+    let followEmail = event.target.getAttribute('followId');
+    
+    const formData = new FormData();
+    formData.append('userEmail',userEmail); // Append the file
+    formData.append('followEmail',followEmail);
+    
+    fetch('/follows', {
+        method: 'POST',
+        body: formData,
+    })
+    .then()
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+ window.location = `http://localhost:3000/othersProfile/${followEmail}`;
+
+      
+    
+    
+  }
+
+
+  </script>
+
+</body>
+</html>

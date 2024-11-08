@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <% if(locals.userProfile) {%>
+    <title>Instagram/<%=userProfile.fullname  %></title>
+    <% }else{ %>
+        <title>Instagram</title>    
+    <% } %>
+    <link rel="stylesheet" href="output.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="https://static.xx.fbcdn.net/rsrc.php/v3/yQ/r/SOrOnJCceiE.png" type="image/x-icon" style="border-radius: 50%;">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>   
+        ::-webkit-scrollbar {
+          scrollbar-width: thin;
+          border-radius: 20px;
+        }
+        
+        /* Track */
+        ::-webkit-scrollbar-track {
+          background: #000000;
+        }
+        
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+          background: rgba(40,40,40,1);;
+        }
+        
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+          background: #555;
+        }
+        .active{
+            border: 2px dashed #ccc;
+        }
+    </style>
+
+  </head>
+  <body class="bg-black text-white font-sans relative">

@@ -1,0 +1,176 @@
+<%- include('../partials/homeHeader.ejs') %>
+
+<div id="callerVideoContainer" style="width: 180px; height:180px;right:0px;bottom:0px;z-index:20;display:none" class="absolute border border-white/50 rounded-[15px] bg-gray-300/20 top-[15px] left-[15px]">
+  <video style="width: 100%;height:100%" src="" class="local_video" id="local_video" muted autoplay></video>
+</div>
+
+<center id="center" style="display: none;">
+<div id="calleeConitainer" class="absolute pt-36 bg-balck top-0 left-96" style="width: 50%; height:100%;z-index:20;">
+  <div id="dialogContanier" style="z-index: 101;" class="hidden absolute h-96 w-96 mt-28 top-3 right-32 ">
+  </div>
+  
+  <video id="calleeVideo" class="relative" src="" style="width: 100%;height:75%;z-index:100" autoplay></video> 
+  <div id="call_buttons" class="flex justify-between pl-4 pr-4 mt-4" style="display: none;width:100%">
+      <button class="w-8 h-8 mr-14" id="camara_Button">
+        <img id="cameraImage" src="/image/videocall/camera.png" class="h-full w-full" alt="" srcset="">
+      </button>
+      <button class=" w-8 h-8 mr-14" id="mic_button">
+        <img id="micImage" src="/image/videocall/mic.png" class="h-full w-full" alt="" srcset="">
+      </button>
+      <button class=" w-8 h-8 mr-14" id="screenShare">
+        <img src="/image/videocall/switchCameraScreenSharing.png" class="h-full w-full" alt="" srcset="">
+      </button>
+      <button id="closeVideoCallButton" class=" w-12 h-12 bg-red-600 rounded-full ">
+        <img src="/image/videocall/hangUp.png" class="h-full w-full" alt="" srcset="">
+      </button>
+  </div>
+  
+</div>
+</center>
+
+<div class="bg-black relative text-white font-sans h-screen  flex" id="chatPageScreen">
+
+
+  
+    <!-- Sidebar -->
+    <div class="w-1/4 bg-balck p-4 flex flex-col space-y-4 overflow-y-scroll">
+        <a href="/home" class="flex items-center space-x-2 text-gray-300 hover:text-white p-3 m-0.5">
+            <svg aria-label="Home" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24">
+              <title>Home</title><path d="M22 23h-6.001a1 1 0 0 1-1-1v-5.455a2.997 2.997 0 1 0-5.993 
+              0V22a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V11.543a1.002 1.002 0 0 1 .31-.724l10-9.543a1.001 1.001
+              0 0 1 1.38 0l10 9.543a1.002 1.002 0 0 1 .31.724V22a1 1 0 0 1-1 1Z"></path>
+          </svg>
+        </a>
+      <div class="flex items-center space-x-2">
+        <% if(locals.userPrfoile){ %>
+        <img src="/<%= userPrfoile.profile_image %>" class="w-20 h-20 rounded-full"/>
+        <span class="text-lg font-bold"><%= userPrfoile.fullname %></span>
+        <h1 id="emailForEmitt" class="hidden"><%=userPrfoile.email%></h1>
+        <% } %>
+      </div>
+  
+      <input type="text" placeholder="Search..." class="bg-gray-700 text-gray-300 rounded p-2 focus:outline-none">
+  
+      <div class="flex flex-col space-y-2">
+        <% if(locals.userContact) {%>
+          <% userContact.forEach(function(contact){ %>
+          <% if(contact.email != currentUser) {%>
+        <div class="flex items-center space-x-2 p-2 rounded bg-gray-700 hover:bg-gray-600 cursor-pointer">
+          <img src="/<%= contact.profile_image %>" class="w-10 h-10 bg-gray-400 rounded-full"/>
+          <div>
+            <p class="font-semibold"></p>
+            <p class="text-sm text-gray-400"><%=contact.username%></p>
+          </div>
+        </div>
+        <% } %>
+        <% }) %>
+        <% }else{ %>
+            Sorry there no contact 😥😥 
+        <% } %>
+        
+
+      </div>
+    </div>
+  
+    <!-- Chat Area -->
+    <div class="w-3/4 flex flex-col p-6 space-y-4 bg-black">
+        <% if(locals.messageToSentUser) {%>
+        <div class="flex justify-between items-center pb-4 border-b border-gray-700">
+            <div class="flex items-center space-x-2">
+              <img src="/<%=messageToSentUser.profile_image %>" class="w-14 h-14  rounded-full"/>
+              <span class="text-lg font-bold"><%=messageToSentUser.fullname %></span>
+            </div>
+            <div class="flex space-x-4 text-gray-400">
+              <svg id="callButton" calleremail="<%=userPrfoile.email%>" calleeemail="<%=messageToSentUser.email %>" aria-label="Video Call" class="cursor-pointer" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Video Call</title><rect fill="none" height="18" rx="3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="16.999" x="1" y="3"></rect><path d="m17.999 9.146 2.495-2.256A1.5 1.5 0 0 1 23 8.003v7.994a1.5 1.5 0 0 1-2.506 1.113L18 14.854" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+              <button><i class="fas fa-info-circle"></i></button>
+            </div>
+        </div>
+        <center>
+            <img src="/<%=messageToSentUser.profile_image%>" class="w-24 h-24  rounded-full" alt="" srcset="">
+            <p class="text-gray-400 text-sm"><%=messageToSentUser.username%></p>
+            <button <%=messageToSentUser.email  %> class="px-4 py-1 bg-gray-400 rounded-lg">View profile</button>
+        </center>
+        <% }else{ %>
+        Start chatiing with your frandes
+        <% } %>
+
+      <!-- Header -->  
+      <!-- Messages -->
+      <div id="messagePart" class="flex flex-col space-y-4 overflow-y-scroll">
+        <% if(locals.userMessage ) {%>
+            <% userMessage.forEach(function(Onemessage){ %>
+                <% if(Onemessage.sender == currentUser) {%>
+                  <div class="flex justify-end">
+                    <div class="bg-blue-600 p-3 rounded-lg max-w-xs">
+                      <p><%=Onemessage.message%></p>
+                    </div>
+                  </div>
+                  <p class="text-sm text-gray-500 text-right">Oct 24, 2024 12:13 PM</p>
+                <% }else{ %>
+                  <div class="flex items-start space-x-2">
+                    <img src="/<%= userPrfoile.profile_image %>" class="w-8 h-8 bg-gray-400 rounded-full"/>
+                    <div class="bg-gray-700 p-3 rounded-lg max-w-xs">
+                      <p><%=Onemessage.message%></p>
+                    </div>
+                  </div>
+                  <p class="text-sm text-gray-500 ml-10">Oct 24, 2024 9:53 AM</p>
+                <% } %>
+            <% }) %>
+        <% } %>
+        <!-- Incoming message -->
+        <!-- <div class="flex items-start space-x-2">
+          <div class="w-8 h-8 bg-gray-400 rounded-full"></div>
+          <div class="bg-gray-700 p-3 rounded-lg max-w-xs">
+            <p>Bro</p>
+          </div>
+        </div>
+        <p class="text-sm text-gray-500 ml-10">Oct 24, 2024 9:53 AM</p> -->
+  
+        <!-- Outgoing message -->
+        <!-- <div class="flex justify-end">
+          <div class="bg-blue-600 p-3 rounded-lg max-w-xs">
+            <p></p>
+          </div>
+        </div>
+        <p class="text-sm text-gray-500 text-right">Oct 24, 2024 12:13 PM</p> -->
+  
+        <!-- Incoming message with reply -->
+    
+  
+        <!-- Outgoing message -->
+   
+      </div>
+  
+      <!-- Message Input -->
+      <div class="flex items-center space-x-3 pt-4 border-t border-gray-700 relative">
+      <% if(locals.messageToSentUser) {%>    
+          <input type="text" id="chatTextBar" userId="<%=userPrfoile.email%>" userToSent="<%=messageToSentUser.email%>" placeholder="Message" class="w-full pl-12 pr-12 px-4 py-2 bg-gray-800 text-gray-400 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <button class="text-gray-400 hover:text-gray-200 absolute">
+            <svg aria-label="Choose an emoji" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Choose an emoji</title><path d="M15.83 10.997a1.167 1.167 0 1 0 1.167 1.167 1.167 1.167 0 0 0-1.167-1.167Zm-6.5 1.167a1.167 1.167 0 1 0-1.166 1.167 1.167 1.167 0 0 0 1.166-1.167Zm5.163 3.24a3.406 3.406 0 0 1-4.982.007 1 1 0 1 0-1.557 1.256 5.397 5.397 0 0 0 8.09 0 1 1 0 0 0-1.55-1.263ZM12 .503a11.5 11.5 0 1 0 11.5 11.5A11.513 11.513 0 0 0 12 .503Zm0 21a9.5 9.5 0 1 1 9.5-9.5 9.51 9.51 0 0 1-9.5 9.5Z"></path></svg>
+          </button>
+          <button class="text-gray-400 hover:text-gray-200 absolute" style="right: 2%;">
+            <svg aria-label="Add Photo or Video" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Add Photo or Video</title><path d="M6.549 5.013A1.557 1.557 0 1 0 8.106 6.57a1.557 1.557 0 0 0-1.557-1.557Z" fill-rule="evenodd"></path><path d="m2 18.605 3.901-3.9a.908.908 0 0 1 1.284 0l2.807 2.806a.908.908 0 0 0 1.283 0l5.534-5.534a.908.908 0 0 1 1.283 0l3.905 3.905" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path><path d="M18.44 2.004A3.56 3.56 0 0 1 22 5.564h0v12.873a3.56 3.56 0 0 1-3.56 3.56H5.568a3.56 3.56 0 0 1-3.56-3.56V5.563a3.56 3.56 0 0 1 3.56-3.56Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          </button>
+        <% }else{ %>
+            
+        <% } %>
+    </div>
+
+    </div>
+  
+</div>
+
+
+
+    <script type="module" src="/socket.io/socket.io.js"></script>
+    <script type="module" src="script/element.js"></script>
+    <script type="module" src="script/constat.js"></script>
+    <script type="module" src="script/ui.js"></script>
+    <script type="module" src="script/chat.js"></script>
+    <script type="module" src="script/webSoket.js"></script>  
+    <script type="module" src="script/store.js"></script>
+    <script type="module" src="script/webRTC.js"></script>
+    <script type="module" src="script/main.js"></script>
+
+  </body>
+  </html>

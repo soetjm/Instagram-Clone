@@ -1,0 +1,161 @@
+<script>
+    //sending email bind requst to soket.io
+    const socket = io();
+
+    const emailSent = {
+        useremail:document.getElementById("emailForEmitt").innerHTML
+    }
+    socket.emit('emailSoketIdChat',emailSent);
+
+    
+    //buttons for post save and tage bars;
+
+
+    const post = document.getElementById("postesBtn");
+    const save = document.getElementById("savedBtn");
+    const taggedBtn = document.getElementById("taggedBtn");
+  
+
+    const postTab =document.getElementById("postes");
+    const savedTab = document.getElementById("saved");
+    const taggedTab = document.getElementById("tagged");
+
+    post.addEventListener("click",()=>{
+      if(postTab.style.display == 'none'){
+        postTab.style.display='block';
+        savedTab.style.display='none';
+        taggedTab.style.display='none';
+      }
+    })
+    save.addEventListener("click",()=>{
+        if(savedTab.style.display == 'none'){
+            postTab.style.display='none';
+            savedTab.style.display='block';
+            taggedTab.style.display='none';
+        }
+    })
+    taggedBtn.addEventListener("click",()=>{
+      console.log(taggedTab.style.display);
+        if(taggedTab.style.display == 'none'){
+            postTab.style.display='none';
+            savedTab.style.display='none';
+            taggedTab.style.display='block';
+        }
+    })
+    
+    const fileInput = document.getElementById('fileInput');
+    const form = document.getElementById('uploadForm');
+
+  fileInput.addEventListener('change', () => {
+        // Automatically submit the form when a file is selected
+        form.submit();
+        const file = this.files[0];
+        if (file) {
+            const fileType = file.type;
+            const validTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+
+            if (!validTypes.includes(fileType)) {
+                alert('Please upload an image file (PNG, JPG, or JPEG).');
+                this.value = ''; // Clear the input
+            }else{
+              form.submit();
+            }
+        }
+    });
+  const postButtons = document.querySelectorAll('.filePostesBtn');
+  const Card = document.getElementById('postCard');
+  const Close = document.getElementById('closeCard');
+ // const otherPost  = document.getElementById("postesButon");
+  
+  //otherPost.addEventListener("click",()=>{
+  //  Card.style.display='block';
+  //})
+  
+  //postButton.addEventListener('click',()=>{
+  //    Card.style.display='block';
+  //})
+
+  postButtons.forEach((button)=>{
+    button.addEventListener(("click"),()=>{
+      Card.style.display='block';
+    })
+  })
+  
+
+  Close.addEventListener('click',()=>{
+    Card.style.display = 'none';
+  })
+
+  const dropArea = document.getElementById('drop-area');
+  const file = document.getElementById('fileElem');
+  const userId = document.getElementById('userIdInput');
+  const share = document.getElementById('share');
+  const textPart = document.getElementById('text-part');
+  const text = document.getElementById('texts');
+ /* const video = document.getElementById('video');
+  video.onclick = function(){
+    if(video.paused){
+      video.play();
+    }else if(video.play()){
+      video.pause();
+    };
+  }*/
+  const videos = document.querySelectorAll('video');
+  videos.forEach((video)=>{
+    video.addEventListener(('click'),()=>{
+      if(video.paused){
+        video.play();
+      }else if(video.play()){
+        video.pause();
+      };
+    })
+  })
+  let email,files;
+
+  dropArea.addEventListener('dragover', (event) => {
+    event.preventDefault();
+    dropArea.classList.add('active');
+  });
+
+  dropArea.addEventListener('dragleave', () => {
+    dropArea.classList.remove('active');
+  });
+
+  dropArea.addEventListener('drop', (event) => {
+    event.preventDefault();
+    files = event.dataTransfer.files;
+    textPart.style.display = 'block';
+     email = userId.value;
+    
+  });
+  share.addEventListener('click',()=>{
+      let value = text.value;
+      console.log(value,email);
+      handleFiles(files,email,text);
+      setTimeout(()=>{
+        window.location = `http://localhost:3000/profile/${email}`
+      },3000)
+     // Card.style.display = 'none';
+  })
+
+  function handleFiles(files,userId,label) {
+    const formData = new FormData();
+    formData.append('image', files[0]); // Append the file
+    formData.append('email',userId);
+    formData.append('text',label.value);
+    console.log(file[0]);
+
+    fetch('/uploadFile', {
+        method: 'POST',
+        body: formData,
+    })
+    .then()
+    .catch(error => {
+        console.error('Error:', error);
+    });
+  }
+
+</script>
+  <!-- <script src="script/profile.js"></script> -->
+</body>
+</html>
